@@ -51,3 +51,14 @@ Keep the existing hosting and DNS. Run `pnpm build:whc` and `pnpm verify:whc`. T
 5. Verify homepage buyer FAQs, `/products/`, `/order/?product=Quadrato`, the sitemap, legacy redirects and a missing URL. Send an owner-controlled quote request and confirm inbox delivery.
 
 No hosting credentials are included. Building a package does not deploy it to WHC.
+
+
+## Bilingual buying experience (October 27, 2026)
+
+The WHC export contains 112 pages: 56 English pages and their French equivalents under `/fr/`. Seven model pages and five industry guides are available in both languages. Model specifications, refill capacity, warranty and delivery promises must come from verified supplier documentation; the comparison deliberately lists profile and planning checks rather than invented numeric specifications.
+
+`build:whc` sets `lang="fr-CA"` in the complete French HTML documents after export. Page content also declares its language. The same-page language switch preserves the selected product when moving between quote forms. Sitemaps and page metadata contain reciprocal English/French alternatives.
+
+The form emits `wipeaway:inquiry-submitted` only after the form endpoint reports success. No third-party analytics collection has been added. Inbox delivery still requires a real submission and recipient confirmation.
+
+Validation: static checks cover every exported page, internal link, local asset, sitemap route and document-language declaration. Responsive checks cover representative English/French templates from 320px to 1920px.

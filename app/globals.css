@@ -158,3 +158,20 @@ img{display:block;max-width:100%}
  .hero-visual{height:390px}.footer-brand img{width:220px;height:56px}
  .utility{font-size:clamp(6.5px,1.8vw,9px);letter-spacing:.035em}
 }
+
+/* Buying paths and bilingual navigation. */
+.utility{position:relative;padding-inline:48px;min-height:32px;display:flex;align-items:center;justify-content:center}
+.language-switch{position:absolute;right:clamp(12px,3vw,64px);top:0;height:100%;min-width:32px;display:grid;place-items:center;color:#fff;font-size:11px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px}
+.desktop-nav{gap:clamp(16px,2.2vw,32px)}
+.product-headline{font-size:clamp(46px,4.7vw,74px)!important;line-height:1.02!important;letter-spacing:-.05em!important}
+.product-hero{background:radial-gradient(ellipse at 50% 45%,#fff 10%,#eaf5ff 70%);display:grid;place-items:center;min-height:600px}
+.product-hero>img{width:100%;height:100%;max-height:680px;padding:50px 70px 100px;object-fit:contain;filter:none}
+.product-hero-label{left:30px;bottom:30px;padding:20px 28px;width:auto;min-width:220px}
+.buyer-note{padding:48px;background:var(--ice);margin-block:40px}.buyer-note h2{font:600 clamp(30px,3vw,48px)/1.1 "Space Grotesk",sans-serif;max-width:950px}.buyer-note p{max-width:700px}
+.buyer-checklist{padding-top:0}.buyer-checklist ul{padding-left:0;list-style:none}.buyer-checklist li{border-color:var(--line);color:var(--ink)}.comparison-note{max-width:850px;color:var(--muted)}
+.selection-table caption{text-align:left;font-weight:700;padding-bottom:16px}.selection-table td{min-width:200px}
+@media(max-width:1100px) and (min-width:901px){.desktop-nav{gap:12px}.desktop-nav a{font-size:9px;letter-spacing:.04em}}
+@media(max-width:900px){.product-hero{min-height:440px}.product-hero>img{padding:30px 60px 100px;max-height:560px}.utility{padding-inline:42px}.utility span{font-size:clamp(6px,1.55vw,9px);letter-spacing:.02em;white-space:normal}.product-headline{font-size:clamp(42px,7vw,66px)!important}.buyer-note{padding:30px}}
+@media(max-width:560px){.product-hero{min-height:390px}.product-hero>img{padding:24px 40px 100px}.product-hero-label{left:16px;bottom:16px}.product-headline{font-size:clamp(38px,10vw,52px)!important}.buyer-note{padding:24px}.utility span{font-size:6.7px}}
+
+.product-hero>img{mix-blend-mode:multiply}

@@ -1,13 +1,4 @@
-import type { MetadataRoute } from "next";
-import { articles, cities, productDetails } from "./content";
-
-export default function sitemap():MetadataRoute.Sitemap{
-  const base="https://wipeaway.ca";
-  const fixed=["","/about","/products","/order","/locations","/clients-that-use-our-wipe-stands","/blog"];
-  return [
-    ...fixed.map((path,i)=>({url:`${base}${path}`,lastModified:new Date("2026-10-27"),changeFrequency:(i===0?"weekly":"monthly") as "weekly"|"monthly",priority:i===0?1:.7})),
-    ...Object.keys(productDetails).map(slug=>({url:`${base}/products/${slug}`,lastModified:new Date("2026-10-27"),changeFrequency:"monthly" as const,priority:.8})),
-    ...cities.map(city=>({url:`${base}/locations/${city.slug}`,lastModified:new Date("2026-10-27"),changeFrequency:"monthly" as const,priority:.65})),
-    ...Object.keys(articles).map(slug=>({url:`${base}/blog/${slug}`,lastModified:new Date("2026-10-27"),changeFrequency:"monthly" as const,priority:.6})),
-  ];
-}
+import type {MetadataRoute} from 'next';
+import {articles,cities,productDetails} from './content';
+import {models,industries} from './catalog';
+export default function sitemap():MetadataRoute.Sitemap{const paths=['','about','products','order','locations','clients-that-use-our-wipe-stands','blog','compare','industries',...Object.keys(productDetails).map(x=>'products/'+x),...cities.map(x=>'locations/'+x.slug),...Object.keys(articles).map(x=>'blog/'+x),...models.map(x=>'dispensers/'+x.slug),...industries.map(x=>'industries/'+x.slug)];return paths.flatMap(path=>{const en='https://wipeaway.ca/'+(path?path+'/':''),fr='https://wipeaway.ca/fr/'+(path?path+'/':'');return[en,fr].map(url=>({url,lastModified:new Date('2026-10-27'),changeFrequency:'monthly' as const,priority:path?0.7:1,alternates:{languages:{'en-CA':en,'fr-CA':fr,'x-default':en}}}));});}

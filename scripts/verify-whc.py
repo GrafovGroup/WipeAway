@@ -24,13 +24,16 @@ class Page(HTMLParser):
 for route in manifest['pages']:
  file=out/route.strip('/')/'index.html';p=Page();p.feed(file.read_text())
  if p.h1!=1 or not p.title_text or not p.canonical:errors.append('Metadata: '+route)
+ text=file.read_text()
+ if route.startswith('/fr/') and '<html lang="fr-CA">' not in text:errors.append('French document language: '+route)
+ if 'hrefLang="fr-CA"' not in text and 'hreflang="fr-CA"' not in text:errors.append('Missing language alternate: '+route)
  for s in p.schemas:
   if s.get('@type')=='Article' and not s.get('datePublished'):errors.append('Article date: '+route)
 for ref in links|assets:
  p=out/unquote(urlparse(ref).path).lstrip('/')
  if not p.is_file() and not (p/'index.html').is_file():errors.append('Missing: '+ref)
 urls=[n.text for n in ET.parse(out/'sitemap.xml').getroot().findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-assert len(urls)==42
+assert len(urls)==len(manifest["pages"])
 for url in urls:
  assert (out/urlparse(url).path.strip('/')/'index.html').is_file(),url
 assert 'Commercial wipes and dispensers, explained.' in (out/'index.html').read_text()

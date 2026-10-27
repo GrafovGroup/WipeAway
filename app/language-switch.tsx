@@ -1,0 +1,3 @@
+'use client';
+import {usePathname} from 'next/navigation';
+export function LanguageSwitch(){const pathname=usePathname()||'/';const fr=pathname==='/fr'||pathname.startsWith('/fr/');const target=fr?(pathname.slice(3)||'/'):('/fr'+(pathname==='/'?'/':pathname));return <a className="language-switch" href={target} lang={fr?'en':'fr'} hrefLang={fr?'en-CA':'fr-CA'} aria-label={fr?'View this page in English':'Consulter cette page en français'} onClick={e=>{const product=new URLSearchParams(window.location.search).get('product');if(product){e.preventDefault();window.location.assign(target+'?product='+encodeURIComponent(product));}}}>{fr?'EN':'FR'}</a>}

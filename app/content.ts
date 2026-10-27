@@ -65,11 +65,11 @@ export const productDetails = {
     items:[
       ["Quadrato","A square-profile floor stand with a clean architectural presence.","/legacy-assets/quadrato-sr-13dca33bfb.png"],
       ["Monolito","A monolithic, compact station for polished interiors.","/legacy-assets/monolito-0fa3f94ec1.png"],
-      ["Rotondo","A round-profile floor unit with generous refill capacity.","/legacy-assets/rotondo-sr-3d303e10f4.png"],
+      ["Rotondo","A round-profile floor unit for commercial interiors.","/legacy-assets/rotondo-sr-3d303e10f4.png"],
       ["Circo","A circular open-frame format for visible, approachable placement.","/legacy-assets/circo-sr-66b3a81cb8.png"],
       ["Tozzo","A compact square dispenser for smaller facility footprints.","/legacy-assets/tozzo-sr-782582bdbc.png"],
       ["Curvo","A curved-profile station designed for front-of-house use.","/legacy-assets/curvo-sr-185713b9ad.png"],
-      ["Giro","A mobile or compact-format option for adaptable placement.","/legacy-assets/giro-wt-42f82625b0.png"],
+      ["Giro","An alternative dispenser format; confirm the current configuration for your space.","/legacy-assets/giro-wt-42f82625b0.png"],
     ],
     benefits:["Multiple footprints and finishes","Commercial-grade construction","Formats for bags and buckets","Signage and program support"],
     faq:[["Which dispenser is right for a busy lobby?","Capacity, available floor space and visual prominence all matter. Share a photo or dimensions and we can narrow the suitable formats."],["Can dispenser finishes match our interiors?","WipeAway offers several ready-made finishes and can discuss custom requirements for larger programs."],["Do dispensers include wipes?","Dispensers and refills can be specified together as a complete program or ordered separately."]]

@@ -1,3 +1,6 @@
+import {models, industries} from "../catalog";
+import {BuyerPage} from "../buyer-pages";
+import {FrenchPage,frenchMeta} from "../french-page";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -18,9 +21,9 @@ const metaByPath:Record<string,{title:string;description:string}> = {
   "clients-that-use-our-wipe-stands":{title:"Facilities Using WipeAway Products",description:"See organizations and facility environments featured on the original WipeAway client page."},
 };
 
-export async function generateMetadata({params}:RouteProps):Promise<Metadata>{
+async function englishMetadata({params}:RouteProps):Promise<Metadata>{
   const {slug}=await params; const path=slug.join("/");
-  if(slug.length>2) notFound();
+  if(slug.length>(slug[0]==="fr"?3:2)) notFound();
   if(path.startsWith("locations/") && slug[1]){
     const city=cityBySlug.get(slug[1]); if(city) return {title:`Commercial Wipe Dispensers in ${city.name}, ${city.province}`,description:`WipeAway supplies commercial wipe dispensers, refill wipes and signage for ${city.focus} in ${city.name} and ${city.region}.`,alternates:{canonical:`/locations/${city.slug}`}};
   }
@@ -42,7 +45,7 @@ function QuoteBand({title="Build a wipe program around your facilities."}:{title
 function ProductPage({productKey}:{productKey:keyof typeof productDetails}){
   const p=productDetails[productKey]; const path=`/products/${productKey}`;
   return <PageFrame><main id="main-content"><Breadcrumbs items={[["HOME","/"],["PRODUCTS","/products"],[p.title.toUpperCase()]]}/><InnerHero eyebrow={p.eyebrow} title={p.title} intro={p.intro} image={p.image}><div className="hero-actions"><Link className="button button-blue" href="/order">REQUEST PRICING</Link><a className="text-link" href={phoneHref}>CALL {phoneDisplay}</a></div></InnerHero>
-    <section className="section shell"><div className="section-heading"><div><p className="eyebrow blue">PRODUCT OPTIONS</p><h2>Find the right format for the space.</h2></div><p>Product specifications and availability can vary. We’ll confirm compatible formats and current commercial options as part of your inquiry.</p></div><div className="model-grid">{p.items.map(([name,desc,image],i)=><article className="model-card" key={name}><div><span>{String(i+1).padStart(2,"0")}</span><img loading="lazy" decoding="async" src={image} alt={`${name} ${p.title.toLowerCase()}`}/></div><h2>{name}</h2><p>{desc}</p><Link href={`/order?product=${encodeURIComponent(name)}`}>ASK ABOUT {name.toUpperCase()} ↗</Link></article>)}</div></section>
+    <section className="section shell"><div className="section-heading"><div><p className="eyebrow blue">PRODUCT OPTIONS</p><h2>Find the right format for the space.</h2>{productKey==="wipe-dispensers"&&<Link className="text-link" href="/compare/">COMPARE ALL SEVEN MODELS →</Link>}</div><p>Product specifications and availability can vary. We’ll confirm compatible formats and current commercial options as part of your inquiry.</p></div><div className="model-grid">{p.items.map(([name,desc,image],i)=><article className="model-card" key={name}><div><span>{String(i+1).padStart(2,"0")}</span><img loading="lazy" decoding="async" src={image} alt={`${name} ${p.title.toLowerCase()}`}/></div><h2>{name}</h2><p>{desc}</p><Link href={productKey==="wipe-dispensers"?`/dispensers/${name.toLowerCase()}/`:`/order?product=${encodeURIComponent(name)}`}>{productKey==="wipe-dispensers"?"EXPLORE":"ASK ABOUT"} {name.toUpperCase()} ↗</Link></article>)}</div></section>
     <section className="feature-band"><div className="shell feature-grid"><div><p className="eyebrow">PROGRAM FEATURES</p><h2>Specify products with the whole facility in mind.</h2></div><ul>{p.benefits.map(x=><li key={x}>{x}</li>)}</ul></div></section>
     <section className="section shell faq-section"><p className="eyebrow blue">COMMON QUESTIONS</p><h2>Before you choose.</h2><div>{p.faq.map(([q,a])=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div></section><QuoteBand/>
     <JsonLd data={{"@context":"https://schema.org","@type":"CollectionPage",name:p.title,description:p.intro,url:`https://wipeaway.ca${path}`,mainEntity:{"@type":"ItemList",itemListElement:p.items.map(([name,description,image],i)=>({"@type":"ListItem",position:i+1,item:{"@type":"Product",name,description,image:`https://wipeaway.ca${image}`,brand:{"@type":"Brand",name:"WipeAway"}}}))}}}/><JsonLd data={{"@context":"https://schema.org","@type":"FAQPage",mainEntity:p.faq.map(([q,a])=>({"@type":"Question",name:q,acceptedAnswer:{"@type":"Answer",text:a}}))}}/>
@@ -77,9 +80,15 @@ function BlogPage(){return <PageFrame><main id="main-content"><Breadcrumbs items
 function ArticlePage({slug}:{slug:keyof typeof articles}){const a=articles[slug];return <PageFrame><main id="main-content"><Breadcrumbs items={[["HOME","/"],["WIPE DIGEST","/blog"],[a.title.toUpperCase()]]}/><article className="article"><header><div className="shell"><p className="eyebrow blue">WIPE DIGEST • {a.reading}</p><h1>{a.title}</h1><p>{a.intro}</p><span>{a.date}</span></div></header><img className="article-lead" src={a.image} alt={a.title}/><div className="article-body">{a.sections.map(([heading,text])=><section key={heading}><h2>{heading}</h2><p>{text}</p></section>)}<aside><h2>Need help selecting a commercial wipe system?</h2><p>Tell WipeAway about your site count, facility type and preferred product format.</p><Link className="button button-blue" href="/order">REQUEST INFORMATION</Link></aside></div></article><QuoteBand/><JsonLd data={{"@context":"https://schema.org","@type":"Article",headline:a.title,description:a.intro,image:`https://wipeaway.ca${a.image}`,datePublished:new Date(a.date).toISOString().slice(0,10),dateModified:"2026-10-27",author:{"@type":"Organization",name:"WipeAway"},publisher:{"@type":"Organization",name:"WipeAway"},mainEntityOfPage:`https://wipeaway.ca/blog/${slug}`}}/></main></PageFrame>}
 
 export default async function CatchAllPage({params}:RouteProps){const {slug}=await params; const path=slug.join("/");
-  if(slug.length>2) notFound();
+  if(slug.length>(slug[0]==="fr"?3:2)) notFound();
   if(path==="blog/best-pracitces-for-sanitizing-wipe-dispensers-in-office-buildings") permanentRedirect("/blog/best-practices-for-sanitizing-wipe-dispensers-in-office-buildings");
   if(path in legacyCityRoutes) permanentRedirect(`/locations/${legacyCityRoutes[path]}`);
+  const isFr=slug[0]==="fr"; const parts=isFr?slug.slice(1):slug; const local=parts.join("/");
+  if(local==="compare") return <BuyerPage kind="compare" lang={isFr?"fr":"en"}/>;
+  if(local==="industries") return <BuyerPage kind="industries" lang={isFr?"fr":"en"}/>;
+  if(parts.length===2&&parts[0]==="dispensers"&&models.some(m=>m.slug===parts[1])) return <BuyerPage kind="model" slug={parts[1]} lang={isFr?"fr":"en"}/>;
+  if(parts.length===2&&parts[0]==="industries"&&industries.some(m=>m.slug===parts[1])) return <BuyerPage kind="industry" slug={parts[1]} lang={isFr?"fr":"en"}/>;
+  if(isFr)return <FrenchPage path={local}/>;
   if(path==="products") return <ProductsPage/>;
   if(path==="about") return <AboutPage/>;
   if(path==="order") return <OrderPage/>;
@@ -90,4 +99,15 @@ export default async function CatchAllPage({params}:RouteProps){const {slug}=awa
   if(slug[0]==="locations"&&slug[1]){const city=cityBySlug.get(slug[1]); if(city) return <CityPage city={city}/>;}
   if(slug[0]==="blog"&&slug[1]&&slug[1] in articles) return <ArticlePage slug={slug[1] as keyof typeof articles}/>;
   notFound();
+}
+
+export async function generateMetadata({params}:RouteProps):Promise<Metadata>{
+ const {slug}=await params;const fr=slug[0]==="fr",parts=fr?slug.slice(1):slug,path=parts.join("/");if(parts.length>2)notFound();
+ const m=parts[0]==="dispensers"?models.find(m=>m.slug===parts[1]):undefined;
+ const i=parts[0]==="industries"?industries.find(i=>i.slug===parts[1]):undefined;
+ const lang=fr?"fr":"en";
+ const custom=m?{title:`${m.name} — ${fr?"distributeur de lingettes":"Commercial Wipe Dispenser"}`,description:m[lang].intro}:i?{title:i[lang].title,description:i[lang].intro}:path==="compare"?{title:fr?"Comparer les distributeurs de lingettes":"Compare Commercial Wipe Dispensers",description:fr?"Comparez les sept modèles WipeAway, leurs profils et les points à vérifier avant de commander.":"Compare seven WipeAway dispenser profiles, placement considerations and refill compatibility checks before requesting pricing."}:path==="industries"?{title:fr?"Stations de lingettes par secteur":"Commercial Wipe Stations by Industry",description:fr?"Planifiez des stations pour les bureaux, commerces, hôtels, gestionnaires immobiliers et centres de conditionnement physique.":"Plan wipe stations for offices, gyms, property management, hospitality and retail facilities."}:undefined;
+ const result=custom||(fr?frenchMeta(path):await englishMetadata({params:Promise.resolve({slug:parts})}));
+ const en=path?`/${path}/`:"/",french=path?`/fr/${path}/`:"/fr/";
+ return {...result,alternates:{canonical:fr?french:en,languages:{"en-CA":en,"fr-CA":french,"x-default":en}},openGraph:{title:typeof result?.title==="string"?result.title:undefined,description:result?.description||undefined,locale:fr?"fr_CA":"en_CA",alternateLocale:fr?"en_CA":"fr_CA",url:fr?french:en}};
 }
