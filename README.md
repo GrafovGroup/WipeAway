@@ -62,3 +62,7 @@ The WHC export contains 112 pages: 56 English pages and their French equivalents
 The form emits `wipeaway:inquiry-submitted` only after the form endpoint reports success. No third-party analytics collection has been added. Inbox delivery still requires a real submission and recipient confirmation.
 
 Validation: static checks cover every exported page, internal link, local asset, sitemap route and document-language declaration. Responsive checks cover representative English/French templates from 320px to 1920px.
+
+## Editorial imagery
+
+Fifteen generated product-use and placement illustrations are integrated across English and French pages. Existing model and client-installation photos remain distinct. Responsive 768px and 1536px WebP assets use localized descriptions, explicit dimensions and lazy loading outside the hero. These scenes are illustrative, not proof of client installations or exact product specifications.

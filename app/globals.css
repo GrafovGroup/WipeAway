@@ -175,3 +175,12 @@ img{display:block;max-width:100%}
 @media(max-width:560px){.product-hero{min-height:390px}.product-hero>img{padding:24px 40px 100px}.product-hero-label{left:16px;bottom:16px}.product-headline{font-size:clamp(38px,10vw,52px)!important}.buyer-note{padding:24px}.utility span{font-size:6.7px}}
 
 .product-hero>img{mix-blend-mode:multiply}
+
+/* Editorial imagery: fixed aspect ratios avoid layout shifts. */
+.editorial-photo{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.editorial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.editorial-grid figure{margin:0;min-width:0}.editorial-grid img{aspect-ratio:3/2;object-fit:cover}.editorial-grid figcaption{padding:18px 0;border-bottom:1px solid var(--line);font:600 17px/1.4 "Space Grotesk",sans-serif}.editorial-grid figcaption span{color:var(--blue)}
+.scene-hero{overflow:hidden}.scene-hero>.editorial-photo{height:100%;min-height:600px;object-fit:cover;object-position:68% center;filter:none}.scene-hero .hero-product{left:24px;bottom:24px}
+.editorial-hero .editorial-photo{height:100%;object-fit:cover}.related-grid .editorial-photo{margin-bottom:22px}
+@media(max-width:1100px){.editorial-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.editorial-grid{grid-template-columns:minmax(0,1fr)}.scene-hero>.editorial-photo{min-height:0;height:100%;object-position:70% center}.editorial-grid figcaption{font-size:16px}}
