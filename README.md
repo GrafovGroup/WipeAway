@@ -1,3 +1,41 @@
-# WipeAway
+# WipeAway Canada
 
-Website source for https://wipeaway.ca. Full source upload in progress.
+Production source for https://wipeaway.ca — commercial wipe dispensers, refills, signs and specialty products.
+
+## Development
+
+Requires Node.js 22.13+ and pnpm 11.25.0.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+For portable checkouts, the dev script uses Vinext. The Sites environment configures its managed execution profile automatically. Do not commit `.sites-runtime`, credentials, `.env` files, `node_modules` or generated deployment output.
+
+```sh
+pnpm exec tsc --noEmit
+pnpm build
+python3 scripts/qa-site.py http://localhost:5173
+```
+
+The QA script accepts the actual running preview URL as its argument and crawls sitemap pages, links, images and legacy URLs.
+
+## Content and routes
+
+- `app/page.tsx`: homepage and buyer FAQs.
+- `app/content.ts`: products, city content and articles.
+- `app/[...slug]/page.tsx`: product catalog, categories, location pages, articles and quote route.
+- `app/quote-form.tsx`: browser form submission with loading, failure and success feedback.
+- `app/sitemap.ts` and `app/robots.ts`: crawler discovery.
+- `public/legacy-assets`: existing brand and product images.
+
+Public quote submissions use the existing Formspree endpoint `https://formspree.io/f/xdeownaz`. Its identifier is public; inbox routing is managed in Formspree. A successful submission response does not independently verify delivery to the destination mailbox. Confirm delivery with an owner-controlled test after deployment.
+
+The site currently serves English content. French versions should be completed before adding French alternate-language links. No prices, delivery guarantees, product certifications or new client endorsements have been invented.
+
+## October 27, 2026 review
+
+Added product comparison and homepage buying guidance, category-to-quote model selection, structured breadcrumbs, organization identity, social preview defaults and accurate article publication dates. Corrected the misspelled article slug with a permanent redirect. Extra path segments now return 404 instead of duplicate content. Updated navigation, keyboard focus, skip links, reduced-motion handling, mobile layouts and form feedback. Standardized dependency management on pnpm.
+
+Publication is managed with OpenAI Sites using `.openai/hosting.json`. This project builds a server Worker; it is not a static PHP/shared-hosting export.
