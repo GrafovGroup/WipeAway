@@ -38,4 +38,16 @@ The site currently serves English content. French versions should be completed b
 
 Added product comparison and homepage buying guidance, category-to-quote model selection, structured breadcrumbs, organization identity, social preview defaults and accurate article publication dates. Corrected the misspelled article slug with a permanent redirect. Extra path segments now return 404 instead of duplicate content. Updated navigation, keyboard focus, skip links, reduced-motion handling, mobile layouts and form feedback. Standardized dependency management on pnpm.
 
-Publication is managed with OpenAI Sites using `.openai/hosting.json`. This project builds a server Worker; it is not a static PHP/shared-hosting export.
+Publication is managed with OpenAI Sites using `.openai/hosting.json`. The default Sites build produces a server Worker. For WHC/cPanel, use the dedicated static export described below.
+
+## WHC / cPanel deployment
+
+Keep the existing hosting and DNS. Run `pnpm build:whc` and `pnpm verify:whc`. The isolated build writes all 42 public pages and assets into `whc-dist/`, with Apache/LiteSpeed legacy redirect rules and a 404 page. It does not change the Sites runtime.
+
+1. In cPanel Domains, identify WipeAway.ca’s exact document root; do not assume it is the account-wide `public_html`.
+2. Back up that directory and its current `.htaccess` before deployment.
+3. Upload the contents of `whc-dist/` into that document root. Preserve unrelated files, domain-verification files, mail settings and existing host configuration. Merge the supplied redirect/error-page rules with the existing `.htaccess`; do not blindly replace host-specific directives.
+4. Retain old `_next/static` assets during rollout so existing browser sessions keep working. Update the generated HTML and matching new assets together. Purge hosting/CDN page cache if enabled.
+5. Verify homepage buyer FAQs, `/products/`, `/order/?product=Quadrato`, the sitemap, legacy redirects and a missing URL. Send an owner-controlled quote request and confirm inbox delivery.
+
+No hosting credentials are included. Building a package does not deploy it to WHC.

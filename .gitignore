@@ -44,3 +44,9 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# Shared hosting build output
+/.whc-build/
+/whc-dist/
+/whc-routes.json
+*.tsbuildinfo
